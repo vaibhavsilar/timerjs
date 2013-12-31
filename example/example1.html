@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>proto</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<style>
+</style>
+<script>
 function Timer(o){
 var mins,secs,hrs,TimerRunning,TimerID;
 TimerRunning=false;
@@ -59,3 +67,37 @@ TimerRunning=false;
     return (n<10)?0+""+n:n;
  }
 }
+var parent = "win";
+
+var Screen1 = function()
+{
+	this.parent = "screen";
+	var self = this;
+	var config = {"hrs":0,"mins":0,"secs":3,
+		cue:[{"hrs":0,"mins":0,"secs":1}],
+		complete:$.proxy(onComplete,self)
+		,update:$.proxy(onUpdate,self)
+	};
+	var t = new Timer(config);
+	t.init(document.getElementById("screen"));
+}
+function onUpdate(time)
+{
+	console.log(this.parent +time.secs)
+}
+
+function init(){
+	var s = new Screen1();
+}
+
+function onComplete()
+{
+	console.log("timer complete "+this.parent)
+}
+</script>
+</head>
+<body onLoad="init()">
+<div id="time"></div>
+<div id="screen"></div>
+</body>
+</html>
