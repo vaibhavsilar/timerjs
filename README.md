@@ -8,8 +8,23 @@ This library has no dependency on any library.
 USAGE:
 =======
 ```html
-var config = {hrs:1,mins:30,secs:00}
-var t = new Timer();
+var config = {
+	"hrs":0,"mins":0,"secs":3,
+	complete:onComplete,
+	update:onUpdate
+	};
+	var t = new Timer(config);
+	t.init();
+}
+function onUpdate(time)
+{
+        console.log(time.hrs+" "+time.mins+" "+time.secs);
+}
+
+function onComplete()
+{
+        //code to be executed
+}
 ```
 
 
