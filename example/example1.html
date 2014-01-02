@@ -2,102 +2,31 @@
 <html>
 <head>
 <title>Timer Example1</title>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="../lib/timer.js"></script>
 <style>
 </style>
 <script>
-function Timer(o){
-var mins,secs,hrs,TimerRunning,TimerID;
-TimerRunning=false;
- var display;
- this.init=function(d){ 
-	if(o.mins==undefined){
-		hrs = 1;
-		mins=30;
-		secs=0;
-	}else
-	{
-		hrs = o.hrs;
-		mins= o.mins;
-		secs= o.secs;
-	}
-    display = d;
-	this.stopTimer();
-    this.run();
-	var self = this;
-	TimerID = window.setInterval(function(){self.run();},1000);
- }
- this.stopTimer = function()
- {
-    if(TimerRunning){
-       clearInterval(TimerID);
-	}
-    TimerRunning=false;
- }
- this.run = function()
- {
-    TimerRunning=true;
-    display.innerHTML = this.pad(hrs)+":"+this.pad(mins)+":"+this.pad(secs);
-    if(mins==0 && secs==0 && hrs==0){
-     if(typeof o.complete === 'function'){
-		 o.complete.call();
-	 }
-	 this.stopTimer();
-	 return;
-	}
-    if(secs==0)
-    {
-       mins--;
-	   if(mins==-1)
-	   {
-		   if(hrs!=0)mins	 = 59;
-		   hrs--;
-	   }
-       secs=60;
-    }
-	
-	if(typeof o.update === 'function'){
-		 o.update.apply(o,[{hrs:hrs,mins:mins,secs:secs}]);
-	}
-    secs--;
-	
- } 
- this.pad = function(n) //pads the mins/secs with a 0 if its less than 10
- {
-    return (n<10)?0+""+n:n;
- }
-}
-var parent = "win";
-
-var Screen1 = function()
-{
-	this.parent = "screen";
-	var self = this;
-	var config = {"hrs":0,"mins":0,"secs":3,
-		cue:[{"hrs":0,"mins":0,"secs":1}],
-		complete:$.proxy(onComplete,self)
-		,update:$.proxy(onUpdate,self)
+function init(){
+		var config = {
+		"hrs":0,"mins":0,"secs":3,
+		complete:onComplete,
+		update:onUpdate
 	};
 	var t = new Timer(config);
-	t.init(document.getElementById("screen"));
+	t.init();
 }
 function onUpdate(time)
 {
-	console.log(this.parent +time.secs)
-}
-
-function init(){
-	var s = new Screen1();
+	document.getElementById("screen").innerHTML = time.hrs+" "+time.mins+" "+time.secs;
 }
 
 function onComplete()
 {
-	console.log("timer complete "+this.parent)
+	alert("Event:Complete");
 }
 </script>
 </head>
 <body onLoad="init()">
-<div id="time"></div>
 <div id="screen"></div>
 </body>
 </html>
