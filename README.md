@@ -13,9 +13,10 @@ var config = {
 	complete:onComplete,
 	update:onUpdate
 	};
-	var t = new Timer(config);
-	t.init();
-}
+
+var t = new Timer(config);
+t.init();
+
 function onUpdate(time)
 {
         console.log(time.hrs+" "+time.mins+" "+time.secs);
